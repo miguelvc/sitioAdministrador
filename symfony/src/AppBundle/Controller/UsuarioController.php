@@ -95,27 +95,31 @@ class UsuarioController extends Controller {
 
             if ($json != null) {
                 $fecha = new \DateTime("now");
-                $id = (isset($params->usuarioId)) ? $params->usuarioId : null;
+                $id = (isset($params->usuarioid)) ? $params->usuarioid : null;
                 $email = (isset($params->email)) ? $params->email : null;
                 $nombre = (isset($params->nombre)) ? $params->nombre : null;
                 $password = (isset($params->password)) ? $params->password : null;
                 $vigente = true;
                 $eliminado = false;
 
+                $emailContraint = new Assert\Email();
+                $emailContraint->message = "This email is not valid !! ";
+                $validateEmail = $this->get("validator")->validate($email, $emailContraint);
+                
+                $pwd = hash('sha256', $password);
+                
                 if($id != null){
-                    $emailContraint = new Assert\Email();
-                    $emailContraint->message = "This email is not valid !! ";
-                    $validateEmail = $this->get("validator")->validate($email, $emailContraint);
-                    
+                     
                     $em = $this->getDoctrine()->getManager();
-                    $issetUser = $em->getRepository("BackendBundle:Usuario")->findBy(
+                    $issetUser = $em->getRepository("BackendBundle:Usuario")->findOneBy(
                             array(
-                                "UsuarioId" => $id
+                                "usuarioid" => $id
                     ));
                     
                     if (count($issetUser) > 0) {
                         ($email != null)? $issetUser->setEmail($email):true;
                         ($nombre != null)? $issetUser->setNombre($nombre):true;
+                        ($password != null)? $issetUser->setNombre($pwd):true;
                         $em->persist($issetUser);
                         $em->flush();
                         $data["status"] = 'success';
@@ -129,29 +133,15 @@ class UsuarioController extends Controller {
                         );
                     }
                     
-                }
-                
-                if ($email != null && count($validateEmail) == 0 && $password != null && $nombre != null) {
-                    $usuario = new Usuario();
-                    $usuario->setEliminado($eliminado);
-                    $usuario->setEmail($email);
-                    $usuario->setFecha($fecha);
-                    $usuario->setNombre($nombre);
-                    $usuario->setPassword($password);
-                    $usuario->setVigente($vigente);
-
-                    $pwd = hash('sha256', $password);
-                    $usuario->setPassword($pwd);
-       
                 } else {
-                    $data = array(
-                        "status" => "error",
-                        "code" => 402,
-                        "msg" => "User not created"
-                    );
-                }
+                $data = array(
+                    "status" => "error",
+                    "code" => 404,
+                    "msg" => "User not created"
+                );
+            }
                 
-                
+                                
             } else {
                 $data = array(
                     "status" => "error",
