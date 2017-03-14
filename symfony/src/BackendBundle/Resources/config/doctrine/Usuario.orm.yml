@@ -1,0 +1,69 @@
+BackendBundle\Entity\Usuario:
+    type: entity
+    table: usuarios
+    indexes:
+        fk_PersonaId:
+            columns:
+                - PersonaId
+    id:
+        usuarioid:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: UsuarioId
+            generator:
+                strategy: IDENTITY
+    fields:
+        nombre:
+            type: string
+            nullable: true
+            length: 50
+            options:
+                fixed: false
+            column: Nombre
+        email:
+            type: string
+            nullable: false
+            length: 100
+            options:
+                fixed: false
+            column: Email
+        password:
+            type: string
+            nullable: false
+            length: 45
+            options:
+                fixed: false
+            column: Password
+        vigente:
+            type: boolean
+            nullable: true
+            options:
+                default: '1'
+            column: Vigente
+        eliminado:
+            type: boolean
+            nullable: true
+            options:
+                default: '0'
+            column: Eliminado
+        fecha:
+            type: datetime
+            nullable: true
+            options:
+                default: CURRENT_TIMESTAMP
+            column: Fecha
+    manyToOne:
+        personaid:
+            targetEntity: Persona
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                PersonaId:
+                    referencedColumnName: PersonaId
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

@@ -1,0 +1,82 @@
+BackendBundle\Entity\Persona:
+    type: entity
+    table: personas
+    uniqueConstraints:
+        Rut_UNIQUE:
+            columns:
+                - Rut
+    id:
+        personaid:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: PersonaId
+            generator:
+                strategy: IDENTITY
+    fields:
+        paterno:
+            type: string
+            nullable: false
+            length: 30
+            options:
+                fixed: false
+            column: Paterno
+        materno:
+            type: string
+            nullable: true
+            length: 30
+            options:
+                fixed: false
+            column: Materno
+        nombre:
+            type: string
+            nullable: false
+            length: 50
+            options:
+                fixed: false
+            column: Nombre
+        rut:
+            type: decimal
+            nullable: true
+            precision: 10
+            scale: 0
+            column: Rut
+        dv:
+            type: string
+            nullable: true
+            length: 1
+            options:
+                fixed: true
+            column: Dv
+        nacimiento:
+            type: date
+            nullable: true
+            column: Nacimiento
+        sexo:
+            type: string
+            nullable: true
+            length: 1
+            options:
+                fixed: true
+            column: Sexo
+        estadocivilid:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            column: EstadoCivilId
+        eliminado:
+            type: boolean
+            nullable: true
+            options:
+                default: '0'
+            column: Eliminado
+        fecha:
+            type: datetime
+            nullable: true
+            options:
+                default: CURRENT_TIMESTAMP
+            column: Fecha
+    lifecycleCallbacks: {  }
