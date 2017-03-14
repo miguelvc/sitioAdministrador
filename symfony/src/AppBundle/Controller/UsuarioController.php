@@ -11,6 +11,7 @@ use BackendBundle\Entity\Usuario;
 
 class UsuarioController extends Controller
 {
+    //hola hola
     public function newAction(Request $request){
         
         $helpers = $this->get("app.helpers");
