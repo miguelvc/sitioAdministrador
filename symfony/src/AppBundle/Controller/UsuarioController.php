@@ -11,7 +11,7 @@ use BackendBundle\Entity\Usuario;
 
 class UsuarioController extends Controller
 {
-    //hola hola
+    //hola hola desde indra
     public function newAction(Request $request){
         
         $helpers = $this->get("app.helpers");
@@ -89,11 +89,11 @@ class UsuarioController extends Controller
         $authCheck = $helpers->authCheck($hash);
         
         if($authCheck==true){
-                  
-        
+                        
         $json= $request->get("json",null);
         $params=json_decode($json);
         $data=array();
+        
         if($json != null){
             $fecha = new \DateTime("now");
             $email =(isset($params->email))?$params->email:null;
