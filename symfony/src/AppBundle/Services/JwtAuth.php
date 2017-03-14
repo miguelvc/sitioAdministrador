@@ -53,9 +53,12 @@ if($getIdentity==true){
 public function signUp($email, $password, $getHash = null){
 $key = $this->key;
 
+$pwd = hash('sha256', $password);
+
+                
 $user = $this->manager->getRepository('BackendBundle:Usuario')->findOneBy(
 array("email" => $email,
- "password" => $password)
+ "password" => $pwd)
 );
 if(is_object($user)){
 $signUp = true;

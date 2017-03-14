@@ -65,11 +65,11 @@ class DefaultController extends Controller
                
                return new JsonResponse($signup);
            }else{
-               return $helpers->jsonSerializer(array("status"=>"error","data"=>"Login not valid !!"));
+               return $helpers->jsonSerializer(array("status"=>"error1","data"=>"Login not valid !!"));
            }
         
          }else{
-            return $helpers->jsonSerializer(array("status"=>"error","data"=>"Send Json in POST !!")); 
+            return $helpers->jsonSerializer(array("status"=>"error2","data"=>"Send Json in POST !!")); 
          }
        
        
